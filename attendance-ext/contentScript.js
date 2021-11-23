@@ -83,15 +83,15 @@ for(let i=0;i<timeStampButtons.length; i++){
         } else if ( chatConf.clockout.toString() !== "" && event_name.match(/attendance-card-time-stamp-clock-out/)) {
             // クリックしたボタンは退勤だった場合
             message = chatConf.clockout.toString()
-            set_status = "休暇"
+            set_status = "end"
         } else if ( chatConf.startbreak.toString() !== "" && event_name.match(/attendance-card-time-stamp-start-break/)) {
             // クリックしたボタンは休憩だった場合
             message = chatConf.startbreak.toString()
-            set_status = "外出"
+            set_status = "out"
         } else if ( chatCont.endbreak.toString() !== "" && event_name.match(/attendance-card-time-stamp-end-break/)) {
             // クリックしたボタンは戻りだった場合
             message = chatConf.endbreak.toString()
-            set_status = "在席"
+            set_status = chatConf.status
         }
         let data = dataJson(message, set_status);
         postIruca(data);
