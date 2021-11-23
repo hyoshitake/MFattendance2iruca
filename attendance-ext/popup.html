@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- reset css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Popup page.</title>
+  </head>
+  <body>
+    <div class="container" style="width: 400px;">
+      <h1>Chat setting</h1>
+      <div class="row">
+        <div class="mb-3 col-sm-2">
+          <h3>RoomCode</h3>
+          <p class="font-monospace text-success text-break" id="roomcode">...</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-sm-2">
+          <h3>MemberId</h3>
+          <p class="font-monospace text-success text-break" id="memberid">...</p>
+        </div>
+      </div>
+      <details>
+        <summary>イベント別通知内容設定</summary>
+        <div class="row">
+          <div class="mb-3 col-sm-2">
+            <h3>出勤時</h3>
+            <p class="font-monospace text-success text-break" id="clockin">...</p>
+          </div>
+          <div class="mb-3 col-sm-2">
+            <h3>ステータス</h3>
+            <p class="font-monospace text-success text-break" id="status">...</p>
+          </div>
+          <div class="mb-3 col-sm-2">
+            <h3>退勤時</h3>
+            <p class="font-monospace text-success text-break" id="clockout">...</p>
+          </div>
+          <div class="mb-3 col-sm-2">
+            <h3>休憩時</h3>
+            <p class="font-monospace text-success text-break" id="startbreak">...</p>
+          </div>
+          <div class="mb-3 col-sm-2">
+            <h3>戻り時</h3>
+            <p class="font-monospace text-success text-break" id="endbreak">...</p>
+          </div>
+        </div>
+      </details>
+      <div class="row">
+        <div class="mb-3 col-sm-2">
+          <a href="options.html" target="_options">change setting</a>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="popup.js"></script>
+</html>

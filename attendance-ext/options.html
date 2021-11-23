@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- reset css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Option page.</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Chat setting</h1>
+      <form>
+        <div class="row">
+          <div class="mb-3 col-sm-7">
+            <label for="roomcode" class="h3 form-label">RoomCode</label>
+            <input type="url" class="form-control" id="roomcode" placeholder="https://iruca.co/rooms/[RoomCode]" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-sm-3">
+            <label for="memberid" class="h3 form-label">MemberId</label>
+            <input type="text" class="form-control" id="memberid">
+            <div id="memberidHelp" class="form-text">MemberIDを指定します</div>
+          </div>
+        </div>
+        <details>
+          <summary class="h3 form-label">イベント別通知内容設定</summary>
+          <div class="mb-3 col-sm-7">
+            <label for="clockin" class="h5 form-label">出勤時</label>
+            <input type="text" class="form-control" id="clockin" placeholder="clockin">
+            <div id="usernameHelp" class="form-text">出勤ボタンを押したときにチャットツールに通知する内容</div>
+          </div>
+          <div class="mb-3 col-sm-7">
+            <label for="status" class="h5 form-label">デフォルトステータス</label>
+            <select class="form-select" id="status" placeholder="status">
+              <option value="在席">office(出社)</option>
+              <option value="休暇">wfh(在宅)</option>
+            </select>
+            <div id="usernameHelp" class="form-text">出勤ボタンを押したときに設定するステータスを選択します</div>
+          </div>
+          <div class="mb-3 col-sm-7">
+            <label for="clockout" class="h5 form-label">退勤時</label>
+            <input type="text" class="form-control" id="clockout" placeholder="clockout">
+            <div id="usernameHelp" class="form-text">退勤ボタンを押したときにチャットツールに通知する内容</div>
+          </div>
+          <div class="mb-3 col-sm-7">
+            <label for="startbreak" class="h5 form-label">休憩時</label>
+            <input type="text" class="form-control" id="startbreak" placeholder="startbreak">
+            <div id="usernameHelp" class="form-text">休憩ボタンを押したときにチャットツールに通知する内容</div>
+          </div>
+          <div class="mb-3 col-sm-7">
+            <label for="endbreak" class="h5 form-label">戻り時</label>
+            <input type="text" class="form-control" id="endbreak" placeholder="endbreak">
+            <div id="usernameHelp" class="form-text">戻りボタンを押したときにチャットツールに通知する内容</div>
+          </div>
+        </details>
+        <div class="row">
+          <div class="mb-3 col-sm-2">
+            <button type="button" class="btn btn-primary" id="config-set">Set</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script src="options.js"></script>
+</html>
