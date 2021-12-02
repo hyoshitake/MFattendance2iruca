@@ -60,12 +60,20 @@ function postIruca(data){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    // })
-    // .then(res => res.json())
-    // .then(result => {
-    //     console.log(result);
-    // }).catch((e) => {
-    //     console.error(e);
+    })
+    .then(response => {
+        response.json();
+        if (!response.ok) {
+            console.log('response.ok:', response.ok);
+            console.log('response.status:', response.status);
+            console.log('response.statusText:', response.statusText);
+            throw new Error(response.statusText);
+        }
+        alert("Iruca送信に成功しました");
+    })
+    .catch(e => {
+        console.log(e);
+        alert("Iruca送信に失敗しました");
     });
 }
 
