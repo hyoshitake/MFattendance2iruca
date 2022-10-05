@@ -1,4 +1,3 @@
-$(function(){
 const datetime = function(){
     const dateStr = document.getElementsByClassName('attendance-card-time-recorder-date')[0].innerText;
     const timeStr = document.getElementsByClassName('attendance-card-time-recorder-time')[0].innerText;
@@ -39,31 +38,46 @@ const load = function(){
         chatConf.endbreak = data.endbreak;
     });
 };
+load();
 
-function postIruca(message, set_status){
+function dataJson(text, status){
+    let ret = {
+        "status": status,
+        "message": text
+    };
+
+    return ret;
+}
+
+function postIruca(data){
+    console.log(data);
     const url = "https://iruca.co/api/rooms/" + chatConf.roomcode + "/members/" + chatConf.memberid
-
-    $.ajax({
+    fetch(url, {
         method: "PUT",
-        url: url,
-        data: { status: set_status, message: message }
-    }).done(function(data, textStatus, jqXHR) {
-        // 成功時
-        console.log('data:', data);
-        console.log('textStatus:', textStatus);
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        response.json();
+        if (!response.ok) {
+            console.log('response.ok:', response.ok);
+            console.log('response.status:', response.status);
+            console.log('response.statusText:', response.statusText);
+            throw new Error(response.statusText);
+        }
         alert("Iruca送信に成功しました");
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        // 失敗時
-        console.log("XMLHttpRequest : " + jqXHR.status);
-        console.log("textStatus     : " + textStatus)
-        console.log("errorThrown    : " + errorThrown.message);
+    })
+    .catch(e => {
+        console.log(e);
         alert("Iruca送信に失敗しました");
     });
 }
 
 const timeStampButtons = document.getElementsByClassName('attendance-card-time-stamp-button');
-
-load();
 for(let i=0;i<timeStampButtons.length; i++){
     const element = timeStampButtons[i];
     const event_name = timeStampButtons[i].innerHTML;
@@ -87,7 +101,8 @@ for(let i=0;i<timeStampButtons.length; i++){
             message = chatConf.endbreak.toString()
             set_status = chatConf.status
         }
-        postIruca(message, set_status);
+        let data = dataJson(message, set_status);
+        postIruca(data);
     });
 }
 
@@ -104,5 +119,3 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     }
     load();
 });
-
-}); // jquery
