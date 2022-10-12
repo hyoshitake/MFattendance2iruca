@@ -1,44 +1,27 @@
-const datetime = function(){
-    const dateStr = document.getElementsByClassName('attendance-card-time-recorder-date')[0].innerText;
-    const timeStr = document.getElementsByClassName('attendance-card-time-recorder-time')[0].innerText;
-    return '[' +  dateStr + ' ' + timeStr + ']';
-};
-console.log(datetime());
-
-const user = document.getElementsByClassName("attendance-header-user-name")[0].firstChild.innerText.split(" ")[0];
-console.log(user);
-
 // 設定内容の読み込み
 let chatConf = {};
-const load = function(){
-    chrome.storage.local.get(['roomcode'], function(data) {
+function load(){
+    chrome.storage.local.get(['roomcode', 'memberid', 'status', 'clockin', 'clockout', 'endbreak', 'startbreak'], function(data) {
         chatConf.roomcode = data.roomcode;
-    });
-    chrome.storage.local.get(['memberid'], function(data) {
         chatConf.memberid = data.memberid;
-    });
-    // 出勤時のステータス
-    chrome.storage.local.get(['status'], function(data) {
         chatConf.status = data.status;
-    });
-    // 出勤時の通知内容
-    chrome.storage.local.get(['clockin'], function(data) {
         chatConf.clockin = data.clockin;
-    });
-    // 退勤時の通知内容
-    chrome.storage.local.get(['clockout'], function(data) {
         chatConf.clockout = data.clockout;
-    });
-    // 休憩時の通知内容
-    chrome.storage.local.get(['startbreak'], function(data) {
         chatConf.startbreak = data.startbreak;
-    });
-    // 戻り時の通知内容
-    chrome.storage.local.get(['endbreak'], function(data) {
         chatConf.endbreak = data.endbreak;
+        
+        getIruca()
+        .then(iruca_data => {
+            // ステータスを変更
+            var dom = document.getElementById('iruca_status');
+            dom.value = iruca_data.status
+            
+            // メッセージを変更
+            var dom = document.getElementById('iruca_message');
+            dom.value = iruca_data.message
+        })
     });
 };
-load();
 
 function dataJson(text, status){
     let ret = {
@@ -47,6 +30,25 @@ function dataJson(text, status){
     };
 
     return ret;
+}
+
+async function getIruca(){
+    const url = "https://iruca.co/api/rooms/" + chatConf.roomcode + "/members/" + chatConf.memberid
+    const response = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+
+    if (response.ok) {
+        const jsonValue = await response.json(); // Get JSON value from the response body
+        return Promise.resolve(jsonValue);
+    } else {
+        console.log('iruca api error');
+    }
 }
 
 function postIruca(data){
@@ -77,34 +79,41 @@ function postIruca(data){
     });
 }
 
-const timeStampButtons = document.getElementsByClassName('attendance-card-time-stamp-button');
-for(let i=0;i<timeStampButtons.length; i++){
-    const element = timeStampButtons[i];
-    const event_name = timeStampButtons[i].innerHTML;
-    element.addEventListener('click', function(evt){
-        var message = element.innerText
-        var set_status = ""
-        if ( chatConf.clockin.toString() !== "" && event_name.match(/attendance-card-time-stamp-clock-in/)) {
-            // クリックしたボタンは出勤だった場合
-            message = chatConf.clockin.toString()
-            set_status = chatConf.status
-        } else if ( chatConf.clockout.toString() !== "" && event_name.match(/attendance-card-time-stamp-clock-out/)) {
-            // クリックしたボタンは退勤だった場合
-            message = chatConf.clockout.toString()
-            set_status = "end"
-        } else if ( chatConf.startbreak.toString() !== "" && event_name.match(/attendance-card-time-stamp-start-break/)) {
-            // クリックしたボタンは休憩だった場合
-            message = chatConf.startbreak.toString()
-            set_status = "out"
-        } else if ( chatCont.endbreak.toString() !== "" && event_name.match(/attendance-card-time-stamp-end-break/)) {
-            // クリックしたボタンは戻りだった場合
-            message = chatConf.endbreak.toString()
-            set_status = chatConf.status
-        }
-        let data = dataJson(message, set_status);
-        postIruca(data);
-    });
-}
+// 出勤ボタンをクリックした場合
+let clock_in_form = document.getElementsByClassName('clock_in')[0];
+clock_in_form.addEventListener('submit', function (evt) {
+    let message = chatConf.clockin.toString()
+    let set_status = chatConf.status
+    let data = dataJson(message, set_status);
+    postIruca(data);
+});
+
+// 休憩開始ボタンをクリックした場合
+let start_break_form = document.getElementsByClassName('start_break')[0];
+start_break_form.addEventListener('submit', function (evt) {
+    let message = chatConf.startbreak.toString()
+    let set_status = "out"
+    let data = dataJson(message, set_status);
+    postIruca(data);
+});
+
+// 休憩開始ボタンをクリックした場合
+let end_break_form = document.getElementsByClassName('end_break')[0];
+end_break_form.addEventListener('submit', function (evt) {
+    let message = chatConf.endbreak.toString()
+    let set_status = chatConf.status
+    let data = dataJson(message, set_status);
+    postIruca(data);
+});
+
+// 退勤ボタンをクリックした場合
+let clock_out_form = document.getElementsByClassName('clock_out')[0];
+clock_out_form.addEventListener('submit', function (evt) {
+    let message = chatConf.clockout.toString()
+    let set_status = "end"
+    let data = dataJson(message, set_status);
+    postIruca(data);
+});
 
 // ローカルストレージが変更されたときにログを出力する
 chrome.storage.onChanged.addListener(function(changes, namespace) {
@@ -118,4 +127,51 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
                   storageChange.newValue);
     }
     load();
+});
+
+// irucaの状況を埋め込む
+const reppsitory_header = document.getElementsByClassName('status-container')[0];
+div1 = document.createElement('div');
+div1.innerHTML = 'iruca: '
+               + " <select id='iruca_status' value=''>"
+               + "   <option value='wfh'>wfh</option>"
+               + "   <option value='office'>office</option>"
+               + "   <option value='out'>out</option>"
+               + "   <option value='end'>end</option>"
+               + " </select>"
+               + " <input id='iruca_message' type='text' value='' style='width: 40vw;'/>"
+               + " <input id='iruca_send_button' type='button' value='irucaに送信'/>"
+               + " <input id='iruca_get_button' type='button' value='irucaから取得'/>"
+
+reppsitory_header.insertBefore(div1, reppsitory_header.firstChild);
+
+load();
+
+// irucaに送信ボタンを押したときの処理
+let iruca_send_button = document.getElementById('iruca_send_button');
+iruca_send_button.addEventListener('click', function (evt) {
+    // ステータスを変更
+    var dom = document.getElementById('iruca_status');
+    let set_status = dom.value
+    
+    // メッセージを変更
+    var dom = document.getElementById('iruca_message');
+    let message = dom.value
+    let data = dataJson(message, set_status);
+    postIruca(data);
+});
+
+// irucaから取得ボタンを押したときの処理
+let iruca_get_button = document.getElementById('iruca_get_button');
+iruca_get_button.addEventListener('click', function (evt) {
+    getIruca()
+    .then(iruca_data => {
+        // ステータスを変更
+        var dom = document.getElementById('iruca_status');
+        dom.value = iruca_data.status
+        
+        // メッセージを変更
+        var dom = document.getElementById('iruca_message');
+        dom.value = iruca_data.message
+    })
 });
