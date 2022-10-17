@@ -81,39 +81,51 @@ function postIruca(data){
 
 // 出勤ボタンをクリックした場合
 let clock_in_form = document.getElementsByClassName('clock_in')[0];
-clock_in_form.addEventListener('submit', function (evt) {
-    let message = chatConf.clockin.toString()
-    let set_status = chatConf.status
-    let data = dataJson(message, set_status);
-    postIruca(data);
-});
+if(clock_in_form !== undefined)
+{
+    clock_in_form.addEventListener('submit', function (evt) {
+        let message = chatConf.clockin.toString()
+        let set_status = chatConf.status
+        let data = dataJson(message, set_status);
+        postIruca(data);
+    });
+}
 
 // 休憩開始ボタンをクリックした場合
 let start_break_form = document.getElementsByClassName('start_break')[0];
-start_break_form.addEventListener('submit', function (evt) {
-    let message = chatConf.startbreak.toString()
-    let set_status = "out"
-    let data = dataJson(message, set_status);
-    postIruca(data);
-});
+if(start_break_form !== undefined)
+{
+    start_break_form.addEventListener('submit', function (evt) {
+        let message = chatConf.startbreak.toString()
+        let set_status = "out"
+        let data = dataJson(message, set_status);
+        postIruca(data);
+    });
+}
 
 // 休憩開始ボタンをクリックした場合
 let end_break_form = document.getElementsByClassName('end_break')[0];
-end_break_form.addEventListener('submit', function (evt) {
-    let message = chatConf.endbreak.toString()
-    let set_status = chatConf.status
-    let data = dataJson(message, set_status);
-    postIruca(data);
-});
+if(end_break_form !== undefined)
+{
+    end_break_form.addEventListener('submit', function (evt) {
+        let message = chatConf.endbreak.toString()
+        let set_status = chatConf.status
+        let data = dataJson(message, set_status);
+        postIruca(data);
+    });
+}
 
 // 退勤ボタンをクリックした場合
 let clock_out_form = document.getElementsByClassName('clock_out')[0];
-clock_out_form.addEventListener('submit', function (evt) {
-    let message = chatConf.clockout.toString()
-    let set_status = "end"
-    let data = dataJson(message, set_status);
-    postIruca(data);
-});
+if(clock_out_form !== undefined)
+{
+    clock_out_form.addEventListener('submit', function (evt) {
+        let message = chatConf.clockout.toString()
+        let set_status = "end"
+        let data = dataJson(message, set_status);
+        postIruca(data);
+    });
+}
 
 // ローカルストレージが変更されたときにログを出力する
 chrome.storage.onChanged.addListener(function(changes, namespace) {
