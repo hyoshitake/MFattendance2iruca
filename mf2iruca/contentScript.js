@@ -83,48 +83,96 @@ function postIruca(data){
 let clock_in_form = document.getElementsByClassName('clock_in')[0];
 if(clock_in_form !== undefined)
 {
-    clock_in_form.addEventListener('submit', function (evt) {
+    clock_in_form.addEventListener('click', function (evt) {
         let message = chatConf.clockin.toString()
         let set_status = chatConf.status
         let data = dataJson(message, set_status);
         postIruca(data);
+        getIruca()
+        .then(iruca_data => {
+            // ステータスを変更
+            var dom = document.getElementById('iruca_status');
+            dom.value = iruca_data.status
+            
+            // メッセージを変更
+            var dom = document.getElementById('iruca_message');
+            dom.value = iruca_data.message
+        })
     });
+}else{
+    console.log("出勤ボタンが拾えませんでした")
 }
 
 // 休憩開始ボタンをクリックした場合
 let start_break_form = document.getElementsByClassName('start_break')[0];
 if(start_break_form !== undefined)
 {
-    start_break_form.addEventListener('submit', function (evt) {
+    start_break_form.addEventListener('click', function (evt) {
         let message = chatConf.startbreak.toString()
         let set_status = "out"
         let data = dataJson(message, set_status);
         postIruca(data);
+        getIruca()
+        .then(iruca_data => {
+            // ステータスを変更
+            var dom = document.getElementById('iruca_status');
+            dom.value = iruca_data.status
+            
+            // メッセージを変更
+            var dom = document.getElementById('iruca_message');
+            dom.value = iruca_data.message
+        })
     });
+}else{
+    console.log("休憩開始ボタンが拾えませんでした")
 }
 
 // 休憩開始ボタンをクリックした場合
 let end_break_form = document.getElementsByClassName('end_break')[0];
 if(end_break_form !== undefined)
 {
-    end_break_form.addEventListener('submit', function (evt) {
+    end_break_form.addEventListener('click', function (evt) {
         let message = chatConf.endbreak.toString()
         let set_status = chatConf.status
         let data = dataJson(message, set_status);
         postIruca(data);
+        getIruca()
+        .then(iruca_data => {
+            // ステータスを変更
+            var dom = document.getElementById('iruca_status');
+            dom.value = iruca_data.status
+            
+            // メッセージを変更
+            var dom = document.getElementById('iruca_message');
+            dom.value = iruca_data.message
+        })
     });
+}else{
+    console.log("休憩終了ボタンが拾えませんでした")
 }
 
 // 退勤ボタンをクリックした場合
 let clock_out_form = document.getElementsByClassName('clock_out')[0];
 if(clock_out_form !== undefined)
 {
-    clock_out_form.addEventListener('submit', function (evt) {
+    clock_out_form.addEventListener('click', function (evt) {
         let message = chatConf.clockout.toString()
         let set_status = "end"
         let data = dataJson(message, set_status);
         postIruca(data);
+        getIruca()
+        .then(iruca_data => {
+            // ステータスを変更
+            var dom = document.getElementById('iruca_status');
+            dom.value = iruca_data.status
+            
+            // メッセージを変更
+            var dom = document.getElementById('iruca_message');
+            dom.value = iruca_data.message
+        })
     });
+}else{
+    console.log("退勤ボタンが拾えませんでした")
 }
 
 // ローカルストレージが変更されたときにログを出力する

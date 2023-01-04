@@ -1,6 +1,6 @@
 {
     "name": "MFattendance2iruca",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "「マネーフォワード クラウド勤怠」の打刻に合わせて、設定したチャットに投稿を行います。チャットの設定は拡張機能のオプションページで行ってください。",
     "permissions": [
         "declarativeContent",
