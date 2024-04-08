@@ -6,7 +6,7 @@ MF勤怠からIrucaを更新するツール
 
 ## インストールと初期セットアップ
 ### ChromeWebstoreで拡張機能を追加
-リンク先を開きChromeに追加ボタンを押します。
+リンク先を開きChromeに追加ボタンを押します。  
 リンク先：https://chromewebstore.google.com/detail/mfattendance2iruca/goeljddfchndglfanmijaojloioagdob?hl=ja
 ![image](https://github.com/hyoshitake/MFattendance2iruca/assets/63386751/544c5c93-dc1a-46a5-873f-1269b3bcfb1f)
 
