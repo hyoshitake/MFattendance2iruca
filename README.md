@@ -5,29 +5,11 @@ MF勤怠からIrucaを更新するツール
 [マネーフォワードクラウド勤怠](https://biz.moneyforward.com/attendance) のホーム画面にある出勤・退勤等の打刻のアクションで[Iruca](https://iruca.co/)のステータス変更を行うGoogleChrome拡張機能です。
 
 ## インストールと初期セットアップ
-### 拡張機能をダウンロードします
-Chromeウェブストアに公開していないため、手動でインストールを行ってください。  
-右上の「Code」から「Download ZIP」をクリックしてダウンロードし、解凍してください
-[![Image from Gyazo](https://i.gyazo.com/7da5385861545bd681fdac6b5b42c913.png)](https://gyazo.com/7da5385861545bd681fdac6b5b42c913)
+### ChromeWebstoreで拡張機能を追加
+リンク先を開きChromeに追加ボタンを押します。
+リンク先：https://chromewebstore.google.com/detail/mfattendance2iruca/goeljddfchndglfanmijaojloioagdob?hl=ja
+![image](https://github.com/hyoshitake/MFattendance2iruca/assets/63386751/544c5c93-dc1a-46a5-873f-1269b3bcfb1f)
 
-### Chrome拡張機能のデベロッパーモードを有効にします
-Chromeの右上にあるパズルピースのマークから「拡張機能を管理」をクリックします。あるいは、右上の参天リーダー > その他のツール > 拡張機能 をクリックします。
-[![Image from Gyazo](https://i.gyazo.com/e1b45c10f423ded13a8b504f92569958.png)](https://gyazo.com/e1b45c10f423ded13a8b504f92569958)
-
-右上のトグルスイッチをクリックしてデベロッパーモードを有効にします
-[![Image from Gyazo](https://i.gyazo.com/0c63d0402adb42dab1eaa76ef6349e45.png)](https://gyazo.com/0c63d0402adb42dab1eaa76ef6349e45)
-
-### 拡張機能を読み込む
-「パッケージ化されていない拡張機能を読み込む」をクリックします
-[![Image from Gyazo](https://i.gyazo.com/2d85523d39eed15165de017e97e288fc.png)](https://gyazo.com/2d85523d39eed15165de017e97e288fc)
-  
-
-「attendance-ext」を選択します。
-[![Image from Gyazo](https://i.gyazo.com/f4b7dc6be044ee7a4d6c5c0bc0dd8a90.png)](https://gyazo.com/f4b7dc6be044ee7a4d6c5c0bc0dd8a90)
-
-
-追加されました。
-[![Image from Gyazo](https://i.gyazo.com/e93dd5c8ef770a9ccccfc128c2f57f88.png)](https://gyazo.com/e93dd5c8ef770a9ccccfc128c2f57f88)
 
 ### IrucaのROOM-CODEとMEMBER IDを取得する
 Irucaのページから「ルーム設定」を開きます
